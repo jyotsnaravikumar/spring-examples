@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xsi:schemaLocation="
+            http://cxf.apache.org/jaxrs  http://cxf.apache.org/schemas/jaxrs.xsd
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!-- these are included in the dependency jar -->
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+
+    <bean id="JsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider" />
+
+    <!--Custom Json Provider wrapping the class name as root node-->
+    <bean id="CustomJsonProvider" class="com.jyo.cf.demo.rest.provider.CustomJsonProvider" />
+
+    <jaxrs:server id="people" beanNames="peopleServiceImpl">
+        <jaxrs:providers><ref bean="JsonProvider" /></jaxrs:providers>
+    </jaxrs:server>
+
+</beans>
